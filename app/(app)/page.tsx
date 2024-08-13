@@ -1,6 +1,6 @@
 import {getServerAuth} from "@/lib/auth";
-import {LoginButton, LogoutButton} from "@/components/auth";
-import {UploadForm} from "@/components/UploadForm";
+import {LogoutButton} from "@/components/auth/LogoutButton";
+import {LoginButton} from "@/components/auth/LoginButton";
 
 export default async function Home() {
   const session = await getServerAuth()
@@ -12,7 +12,6 @@ export default async function Home() {
           ? <LogoutButton/>
           : <LoginButton/>
       }
-      <UploadForm/>
 
       {JSON.stringify(session, null, 2)}
     </main>

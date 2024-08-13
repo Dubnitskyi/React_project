@@ -1,15 +1,7 @@
 'use client'
 
-import {signIn, signOut} from 'next-auth/react'
 import {Button} from "@/components/ui/button";
-
-export const LoginButton = () => {
-  return (
-    <Button onClick={() => signIn()}>
-      Sign in
-    </Button>
-  )
-}
+import {signOut} from "next-auth/react";
 
 export const LogoutButton = () => {
   return (
