@@ -30,13 +30,13 @@ model File {
 
 model Category {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   files File[]
 }
 
 model Tag {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   color String
   files File[] @relation("FileTags")
 }
