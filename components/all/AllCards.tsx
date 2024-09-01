@@ -16,11 +16,6 @@ export function AllCards({files}: AllCardsProps) {
     .filter(({category}) => filters.category === 'all' || category.id === +filters.category)
     .filter(({tags}) => filters.tag === 'all' || tags.some(({id}) => id === +filters.tag))
 
-  console.log('---')
-  console.log(filters.tag)
-  console.log(files)
-  console.log(filteredFiles)
-
   return (
     <div className="flex flex-wrap gap-2">
       {filteredFiles.map((file) => (
