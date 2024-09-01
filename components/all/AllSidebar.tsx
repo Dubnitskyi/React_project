@@ -19,7 +19,7 @@ export function AllSidebar({tags, categories}: Props) {
         </SelectTrigger>
         <SelectContent>
           {categories.map(({id, name}) => (
-            <SelectItem value={id.toString()}>
+            <SelectItem key={id} value={id.toString()}>
               {name}
             </SelectItem>
           ))}

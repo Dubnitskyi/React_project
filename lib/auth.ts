@@ -7,6 +7,9 @@ declare module 'next-auth' {
   interface Session {
     user: DefaultSession['user'] & {
       id: string
+      name: string
+      email: string
+      role: string
     }
   }
 }
@@ -41,10 +44,7 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const isPasswordValid = await compare(
-          credentials.password,
-          user.password
-        )
+        const isPasswordValid = credentials.password === user.password
 
         if (!isPasswordValid) {
           return null
@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id + '',
           email: user.email,
           name: user.name,
-          randomKey: 'Hey cool'
+          role: user.role
         }
       }
     })
@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey
+          role: token.role
         }
       }
     },
@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: u.id,
-          randomKey: u.randomKey
+          role: u.role
         }
       }
       return token
