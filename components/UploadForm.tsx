@@ -1,6 +1,5 @@
 'use client'
 
-import {UploadButton} from "@/lib/uploadthing";
 import {useState, useTransition} from "react";
 import {ClientUploadedFileData} from "uploadthing/types";
 import {toast} from "sonner";
@@ -15,6 +14,10 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {addPhoto} from "@/server/files";
 import {useSession} from "next-auth/react";
 import {redirect} from "next/navigation";
+import {generateUploadButton} from "@uploadthing/react";
+import type {OurFileRouter} from "@/app/api/uploadthing/core";
+
+export const UploadButton = generateUploadButton<OurFileRouter>();
 
 const formSchema = z.object({
   name: z.string(),
@@ -29,7 +32,7 @@ interface Props {
 export function UploadForm({categories}: Props) {
   const {data: session} = useSession()
 
-  function onSuccessUpload([file]: ClientUploadedFileData<{ uploadedBy: string }>[]) {
+  function onSuccessUpload([file]: ClientUploadedFileData<{}>[]) {
     setUploadedFileId(file)
   }
 
@@ -46,7 +49,7 @@ export function UploadForm({categories}: Props) {
   })
 
   const [, startTransition] = useTransition()
-  const [uploadedFileId, setUploadedFileId] = useState<ClientUploadedFileData<{ uploadedBy: string }> | null>(null)
+  const [uploadedFileId, setUploadedFileId] = useState<ClientUploadedFileData<{}> | null>(null)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (!uploadedFileId) {
