@@ -1,11 +1,13 @@
 import {prisma} from "@/lib/prisma";
 import {AllSidebar} from "@/components/all/AllSidebar";
-import {FileCard} from "@/components/FileCard";
+import {AllCards} from "@/components/all/AllCards";
+import {Suspense} from "react";
 
 export default async function AllPage() {
-  const [tags, categories, files] = await Promise.all([
+  const [tags, categories, users, files] = await Promise.all([
     prisma.tag.findMany(),
     prisma.category.findMany(),
+    prisma.user.findMany(),
     prisma.file.findMany({
       include: {
         tags: true,
@@ -17,15 +19,14 @@ export default async function AllPage() {
 
   return (
     <div className="flex gap-5">
-      <AllSidebar
-        tags={tags}
-        categories={categories}
-      />
-      <div className="flex gap-2">
-        {files.map((file) => (
-          <FileCard key={file.id} {...file} />
-        ))}
-      </div>
+      <Suspense fallback="loading...">
+        <AllSidebar
+          tags={tags}
+          categories={categories}
+          users={users}
+        />
+        <AllCards files={files} />
+      </Suspense>
     </div>
   )
 }

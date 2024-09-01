@@ -1,15 +1,18 @@
-import {atom} from "jotai";
-import {useAtom} from "jotai";
+import {atom, useAtom} from "jotai";
 
 interface Filters {
   category: string;
-  tags: string[] | "all";
+  tag: string;
+  user: string;
 }
 
-const allItemsFilters = atom<Filters>({
+const defaultFilters: Filters = {
   category: "all",
-  tags: "all"
-})
+  tag: "all",
+  user: "all"
+}
+
+const allItemsFilters = atom<Filters>(defaultFilters)
 
 export function useAllItemsFilter() {
   return useAtom(allItemsFilters)

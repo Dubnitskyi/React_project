@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table";
+import {Suspense} from "react";
 
 export default async function AdminUsersPage() {
   const users = await prisma.user.findMany()
@@ -23,14 +24,16 @@ export default async function AdminUsersPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map(({id, name, email, role}) => (
-            <TableRow key={id}>
-              <TableCell>{id}</TableCell>
-              <TableCell>{name}</TableCell>
-              <TableCell>{email}</TableCell>
-              <TableCell>{role}</TableCell>
-            </TableRow>
-          ))}
+          <Suspense fallback="loading...">
+            {users.map(({id, name, email, role}) => (
+              <TableRow key={id}>
+                <TableCell>{id}</TableCell>
+                <TableCell>{name}</TableCell>
+                <TableCell>{email}</TableCell>
+                <TableCell>{role}</TableCell>
+              </TableRow>
+            ))}
+          </Suspense>
         </TableBody>
       </Table>
     </div>

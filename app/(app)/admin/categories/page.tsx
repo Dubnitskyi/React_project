@@ -1,5 +1,6 @@
 import {prisma} from "@/lib/prisma";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {Suspense} from "react";
 
 export default async function AdminCategoriesPage() {
   const categories = await prisma.category.findMany()
@@ -14,12 +15,14 @@ export default async function AdminCategoriesPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories.map(({id, name}) => (
-            <TableRow key={id}>
-              <TableCell>{id}</TableCell>
-              <TableCell>{name}</TableCell>
-            </TableRow>
-          ))}
+          <Suspense fallback="loading...">
+            {categories.map(({id, name}) => (
+              <TableRow key={id}>
+                <TableCell>{id}</TableCell>
+                <TableCell>{name}</TableCell>
+              </TableRow>
+            ))}
+          </Suspense>
         </TableBody>
       </Table>
     </div>
