@@ -23,7 +23,16 @@ export async function Header() {
         )}
         {
           session
-            ? <LogoutButton/>
+            ? (
+              <>
+                <Link href="/create">
+                  <Button>
+                    Upload
+                  </Button>
+                </Link>
+                <LogoutButton/>
+              </>
+            )
             : <LoginButton/>
         }
       </div>
