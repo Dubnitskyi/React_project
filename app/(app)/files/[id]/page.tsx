@@ -4,6 +4,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Image from "next/image";
 
 const UPLOAD_THING_URL = "https://utfs.io/f/"
+const BLANK_IMAGE = "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
 
 export default async function FilePage({params}: {params: {id: string}}) {
   const file = await prisma.file.findUnique({
@@ -36,7 +37,7 @@ export default async function FilePage({params}: {params: {id: string}}) {
       <div className="flex gap-2 items-center h-10">
         <Avatar className="size-6">
           <AvatarImage
-            src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
+            src={BLANK_IMAGE}
             className="bg-gray-100 p-1"
           />
           <AvatarFallback/>

@@ -3,6 +3,8 @@ import {Badge} from "@/components/ui/badge";
 import {Avatar, AvatarFallback, AvatarImage} from "./ui/avatar";
 import {FullFile} from "@/types";
 
+const BLANK_IMAGE = "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
+
 interface FileCardProps extends FullFile{
 }
 
@@ -23,7 +25,10 @@ export function FileCard({id, name, tags, category, user}: FileCardProps) {
         </div>
         <div className="flex gap-2 items-center h-10">
           <Avatar className="size-6">
-            <AvatarImage src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" className="bg-gray-100 p-1"/>
+            <AvatarImage
+              src={BLANK_IMAGE}
+              className="bg-gray-100 p-1"
+            />
             <AvatarFallback/>
           </Avatar>
           {user.name}
