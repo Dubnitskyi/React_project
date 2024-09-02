@@ -29,7 +29,6 @@ export default async function FilePage({params}: {params: {id: string}}) {
       <h1 className="text-xl font-bold">{file.name}</h1>
       <h2>{file.description}</h2>
       <h4>File type: {file.fileType}</h4>
-      {file.fileId}
       <h4>
         Category: <Badge variant="outline">{file.category.name}</Badge>
       </h4>
@@ -44,7 +43,7 @@ export default async function FilePage({params}: {params: {id: string}}) {
         </Avatar>
         {file.user.name}
       </div>
-      <div className="flex gap-1">
+      <div className="flex gap-1 mb-5">
         {file.tags.map((tag) => (
           <Badge key={tag.id} style={{backgroundColor: tag.color}}>{tag.name}</Badge>
         ))}

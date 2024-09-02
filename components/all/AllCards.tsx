@@ -17,7 +17,7 @@ export function AllCards({files}: AllCardsProps) {
     .filter(({tags}) => filters.tag === 'all' || tags.some(({id}) => id === +filters.tag))
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex justify-center flex-wrap gap-2">
       {filteredFiles.map((file) => (
         <FileCard key={file.id} {...file} />
       ))}

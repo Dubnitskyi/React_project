@@ -9,6 +9,9 @@ interface FileCardProps extends FullFile{
 }
 
 export function FileCard({id, name, tags, category, user}: FileCardProps) {
+
+  const showMore = Math.max(tags.length - 2, 0)
+
   return (
     <Link href={`/files/${id}`}>
       <div className="py-2 px-4 rounded-xl border space-y-1 w-64 h-28">
@@ -19,8 +22,11 @@ export function FileCard({id, name, tags, category, user}: FileCardProps) {
           <Badge variant="outline">
             {category.name}
           </Badge>
-          {tags.map((tag) => (
+          {tags.slice(0, 2).map((tag) => (
             <Badge key={tag.id} style={{backgroundColor: tag.color}}>{tag.name}</Badge>
+          ))}
+          {Array(showMore).fill(null).map(() => (
+            <div>+{showMore}</div>
           ))}
         </div>
         <div className="flex gap-2 items-center h-10">
