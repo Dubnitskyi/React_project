@@ -9,13 +9,14 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "./ui/form";
 import {Button} from "./ui/button";
-import {Category} from "@prisma/client";
+import {Category, Tag} from "@prisma/client";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {addPhoto} from "@/server/files";
 import {useSession} from "next-auth/react";
 import {redirect} from "next/navigation";
 import {generateUploadButton} from "@uploadthing/react";
 import type {OurFileRouter} from "@/app/api/uploadthing/core";
+import {MultiSelect} from "./ui/multi-select";
 
 export const UploadButton = generateUploadButton<OurFileRouter>();
 
@@ -27,9 +28,10 @@ const formSchema = z.object({
 
 interface Props {
   categories: Category[]
+  tags: Tag[]
 }
 
-export function UploadForm({categories}: Props) {
+export function UploadForm({categories, tags}: Props) {
   const {data: session} = useSession()
 
   function onSuccessUpload([file]: ClientUploadedFileData<{}>[]) {
@@ -62,11 +64,14 @@ export function UploadForm({categories}: Props) {
         categoryId: +values.categoryId,
         description: values.description ?? '',
         fileType: uploadedFileId.type,
-        userId: +(session?.user?.id ?? '')
+        userId: +(session?.user?.id ?? ''),
+        tags: selectedTags.map((tag) => +tag)
       })
       redirect('/')
     })
   }
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   return (
     <div>
@@ -143,6 +148,22 @@ export function UploadForm({categories}: Props) {
               </FormItem>
             )}
           />
+          <FormItem>
+            <FormLabel>
+              Tags
+            </FormLabel>
+            <FormControl>
+              <MultiSelect
+                options={tags.map(({id, name}) => ({value: String(id), label: name}))}
+                onValueChange={setSelectedTags}
+                defaultValue={selectedTags}
+                placeholder="Select tags"
+                variant="inverted"
+                maxCount={3}
+              />
+            </FormControl>
+            <FormMessage/>
+          </FormItem>
           <div>
             {uploadedFileId
               ? <Button
@@ -168,7 +189,6 @@ export function UploadForm({categories}: Props) {
           </Button>
         </form>
       </Form>
-
     </div>
   )
 }
