@@ -16,6 +16,7 @@ export async function Header() {
         </Button>
       </Link>
       <div className="flex gap-2 items-center">
+        <Link href="/api-doc">Swagger</Link>
         <Link href="/privacy-policy">Privacy policy</Link>
         {isAdmin && (
           <Link href="/admin">
