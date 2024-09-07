@@ -15,7 +15,8 @@ export async function Header() {
           Sharing platform
         </Button>
       </Link>
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
+        <Link href="/privacy-policy">Privacy policy</Link>
         {isAdmin && (
           <Link href="/admin">
             <Button>Admin page</Button>
